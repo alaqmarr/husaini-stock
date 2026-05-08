@@ -67,6 +67,8 @@ model Sale {
   customerId      String
   date            DateTime   @default(now())
   totalAmount     Float      @default(0.0)
+  hasGst          Boolean    @default(false)
+  gstAmount       Float      @default(0.0)
   status          String     @default("COMPLETED") // "COMPLETED", "CANCELLED"
   paymentStatus   String     @default("PENDING") // "PENDING", "PARTIAL", "PAID"
 

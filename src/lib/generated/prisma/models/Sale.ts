@@ -28,10 +28,12 @@ export type AggregateSale = {
 
 export type SaleAvgAggregateOutputType = {
   totalAmount: number | null
+  gstAmount: number | null
 }
 
 export type SaleSumAggregateOutputType = {
   totalAmount: number | null
+  gstAmount: number | null
 }
 
 export type SaleMinAggregateOutputType = {
@@ -39,6 +41,8 @@ export type SaleMinAggregateOutputType = {
   customerId: string | null
   date: Date | null
   totalAmount: number | null
+  hasGst: boolean | null
+  gstAmount: number | null
   status: string | null
   paymentStatus: string | null
 }
@@ -48,6 +52,8 @@ export type SaleMaxAggregateOutputType = {
   customerId: string | null
   date: Date | null
   totalAmount: number | null
+  hasGst: boolean | null
+  gstAmount: number | null
   status: string | null
   paymentStatus: string | null
 }
@@ -57,6 +63,8 @@ export type SaleCountAggregateOutputType = {
   customerId: number
   date: number
   totalAmount: number
+  hasGst: number
+  gstAmount: number
   status: number
   paymentStatus: number
   _all: number
@@ -65,10 +73,12 @@ export type SaleCountAggregateOutputType = {
 
 export type SaleAvgAggregateInputType = {
   totalAmount?: true
+  gstAmount?: true
 }
 
 export type SaleSumAggregateInputType = {
   totalAmount?: true
+  gstAmount?: true
 }
 
 export type SaleMinAggregateInputType = {
@@ -76,6 +86,8 @@ export type SaleMinAggregateInputType = {
   customerId?: true
   date?: true
   totalAmount?: true
+  hasGst?: true
+  gstAmount?: true
   status?: true
   paymentStatus?: true
 }
@@ -85,6 +97,8 @@ export type SaleMaxAggregateInputType = {
   customerId?: true
   date?: true
   totalAmount?: true
+  hasGst?: true
+  gstAmount?: true
   status?: true
   paymentStatus?: true
 }
@@ -94,6 +108,8 @@ export type SaleCountAggregateInputType = {
   customerId?: true
   date?: true
   totalAmount?: true
+  hasGst?: true
+  gstAmount?: true
   status?: true
   paymentStatus?: true
   _all?: true
@@ -190,6 +206,8 @@ export type SaleGroupByOutputType = {
   customerId: string
   date: Date
   totalAmount: number
+  hasGst: boolean
+  gstAmount: number
   status: string
   paymentStatus: string
   _count: SaleCountAggregateOutputType | null
@@ -222,6 +240,8 @@ export type SaleWhereInput = {
   customerId?: Prisma.StringFilter<"Sale"> | string
   date?: Prisma.DateTimeFilter<"Sale"> | Date | string
   totalAmount?: Prisma.FloatFilter<"Sale"> | number
+  hasGst?: Prisma.BoolFilter<"Sale"> | boolean
+  gstAmount?: Prisma.FloatFilter<"Sale"> | number
   status?: Prisma.StringFilter<"Sale"> | string
   paymentStatus?: Prisma.StringFilter<"Sale"> | string
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
@@ -233,6 +253,8 @@ export type SaleOrderByWithRelationInput = {
   customerId?: Prisma.SortOrder
   date?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
+  hasGst?: Prisma.SortOrder
+  gstAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrder
   customer?: Prisma.CustomerOrderByWithRelationInput
@@ -247,6 +269,8 @@ export type SaleWhereUniqueInput = Prisma.AtLeast<{
   customerId?: Prisma.StringFilter<"Sale"> | string
   date?: Prisma.DateTimeFilter<"Sale"> | Date | string
   totalAmount?: Prisma.FloatFilter<"Sale"> | number
+  hasGst?: Prisma.BoolFilter<"Sale"> | boolean
+  gstAmount?: Prisma.FloatFilter<"Sale"> | number
   status?: Prisma.StringFilter<"Sale"> | string
   paymentStatus?: Prisma.StringFilter<"Sale"> | string
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
@@ -258,6 +282,8 @@ export type SaleOrderByWithAggregationInput = {
   customerId?: Prisma.SortOrder
   date?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
+  hasGst?: Prisma.SortOrder
+  gstAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrder
   _count?: Prisma.SaleCountOrderByAggregateInput
@@ -275,6 +301,8 @@ export type SaleScalarWhereWithAggregatesInput = {
   customerId?: Prisma.StringWithAggregatesFilter<"Sale"> | string
   date?: Prisma.DateTimeWithAggregatesFilter<"Sale"> | Date | string
   totalAmount?: Prisma.FloatWithAggregatesFilter<"Sale"> | number
+  hasGst?: Prisma.BoolWithAggregatesFilter<"Sale"> | boolean
+  gstAmount?: Prisma.FloatWithAggregatesFilter<"Sale"> | number
   status?: Prisma.StringWithAggregatesFilter<"Sale"> | string
   paymentStatus?: Prisma.StringWithAggregatesFilter<"Sale"> | string
 }
@@ -283,6 +311,8 @@ export type SaleCreateInput = {
   id?: string
   date?: Date | string
   totalAmount?: number
+  hasGst?: boolean
+  gstAmount?: number
   status?: string
   paymentStatus?: string
   customer: Prisma.CustomerCreateNestedOneWithoutSalesInput
@@ -294,6 +324,8 @@ export type SaleUncheckedCreateInput = {
   customerId: string
   date?: Date | string
   totalAmount?: number
+  hasGst?: boolean
+  gstAmount?: number
   status?: string
   paymentStatus?: string
   items?: Prisma.SaleItemUncheckedCreateNestedManyWithoutSaleInput
@@ -303,6 +335,8 @@ export type SaleUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  hasGst?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  gstAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutSalesNestedInput
@@ -314,6 +348,8 @@ export type SaleUncheckedUpdateInput = {
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  hasGst?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  gstAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
   items?: Prisma.SaleItemUncheckedUpdateManyWithoutSaleNestedInput
@@ -324,6 +360,8 @@ export type SaleCreateManyInput = {
   customerId: string
   date?: Date | string
   totalAmount?: number
+  hasGst?: boolean
+  gstAmount?: number
   status?: string
   paymentStatus?: string
 }
@@ -332,6 +370,8 @@ export type SaleUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  hasGst?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  gstAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -341,6 +381,8 @@ export type SaleUncheckedUpdateManyInput = {
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  hasGst?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  gstAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -360,12 +402,15 @@ export type SaleCountOrderByAggregateInput = {
   customerId?: Prisma.SortOrder
   date?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
+  hasGst?: Prisma.SortOrder
+  gstAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrder
 }
 
 export type SaleAvgOrderByAggregateInput = {
   totalAmount?: Prisma.SortOrder
+  gstAmount?: Prisma.SortOrder
 }
 
 export type SaleMaxOrderByAggregateInput = {
@@ -373,6 +418,8 @@ export type SaleMaxOrderByAggregateInput = {
   customerId?: Prisma.SortOrder
   date?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
+  hasGst?: Prisma.SortOrder
+  gstAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrder
 }
@@ -382,12 +429,15 @@ export type SaleMinOrderByAggregateInput = {
   customerId?: Prisma.SortOrder
   date?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
+  hasGst?: Prisma.SortOrder
+  gstAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrder
 }
 
 export type SaleSumOrderByAggregateInput = {
   totalAmount?: Prisma.SortOrder
+  gstAmount?: Prisma.SortOrder
 }
 
 export type SaleScalarRelationFilter = {
@@ -437,6 +487,10 @@ export type SaleUncheckedUpdateManyWithoutCustomerNestedInput = {
   deleteMany?: Prisma.SaleScalarWhereInput | Prisma.SaleScalarWhereInput[]
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type SaleCreateNestedOneWithoutItemsInput = {
   create?: Prisma.XOR<Prisma.SaleCreateWithoutItemsInput, Prisma.SaleUncheckedCreateWithoutItemsInput>
   connectOrCreate?: Prisma.SaleCreateOrConnectWithoutItemsInput
@@ -455,6 +509,8 @@ export type SaleCreateWithoutCustomerInput = {
   id?: string
   date?: Date | string
   totalAmount?: number
+  hasGst?: boolean
+  gstAmount?: number
   status?: string
   paymentStatus?: string
   items?: Prisma.SaleItemCreateNestedManyWithoutSaleInput
@@ -464,6 +520,8 @@ export type SaleUncheckedCreateWithoutCustomerInput = {
   id?: string
   date?: Date | string
   totalAmount?: number
+  hasGst?: boolean
+  gstAmount?: number
   status?: string
   paymentStatus?: string
   items?: Prisma.SaleItemUncheckedCreateNestedManyWithoutSaleInput
@@ -503,6 +561,8 @@ export type SaleScalarWhereInput = {
   customerId?: Prisma.StringFilter<"Sale"> | string
   date?: Prisma.DateTimeFilter<"Sale"> | Date | string
   totalAmount?: Prisma.FloatFilter<"Sale"> | number
+  hasGst?: Prisma.BoolFilter<"Sale"> | boolean
+  gstAmount?: Prisma.FloatFilter<"Sale"> | number
   status?: Prisma.StringFilter<"Sale"> | string
   paymentStatus?: Prisma.StringFilter<"Sale"> | string
 }
@@ -511,6 +571,8 @@ export type SaleCreateWithoutItemsInput = {
   id?: string
   date?: Date | string
   totalAmount?: number
+  hasGst?: boolean
+  gstAmount?: number
   status?: string
   paymentStatus?: string
   customer: Prisma.CustomerCreateNestedOneWithoutSalesInput
@@ -521,6 +583,8 @@ export type SaleUncheckedCreateWithoutItemsInput = {
   customerId: string
   date?: Date | string
   totalAmount?: number
+  hasGst?: boolean
+  gstAmount?: number
   status?: string
   paymentStatus?: string
 }
@@ -545,6 +609,8 @@ export type SaleUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  hasGst?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  gstAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutSalesNestedInput
@@ -555,6 +621,8 @@ export type SaleUncheckedUpdateWithoutItemsInput = {
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  hasGst?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  gstAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -563,6 +631,8 @@ export type SaleCreateManyCustomerInput = {
   id?: string
   date?: Date | string
   totalAmount?: number
+  hasGst?: boolean
+  gstAmount?: number
   status?: string
   paymentStatus?: string
 }
@@ -571,6 +641,8 @@ export type SaleUpdateWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  hasGst?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  gstAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
   items?: Prisma.SaleItemUpdateManyWithoutSaleNestedInput
@@ -580,6 +652,8 @@ export type SaleUncheckedUpdateWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  hasGst?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  gstAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
   items?: Prisma.SaleItemUncheckedUpdateManyWithoutSaleNestedInput
@@ -589,6 +663,8 @@ export type SaleUncheckedUpdateManyWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  hasGst?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  gstAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -629,6 +705,8 @@ export type SaleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   customerId?: boolean
   date?: boolean
   totalAmount?: boolean
+  hasGst?: boolean
+  gstAmount?: boolean
   status?: boolean
   paymentStatus?: boolean
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
@@ -641,6 +719,8 @@ export type SaleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   customerId?: boolean
   date?: boolean
   totalAmount?: boolean
+  hasGst?: boolean
+  gstAmount?: boolean
   status?: boolean
   paymentStatus?: boolean
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
@@ -651,6 +731,8 @@ export type SaleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   customerId?: boolean
   date?: boolean
   totalAmount?: boolean
+  hasGst?: boolean
+  gstAmount?: boolean
   status?: boolean
   paymentStatus?: boolean
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
@@ -661,11 +743,13 @@ export type SaleSelectScalar = {
   customerId?: boolean
   date?: boolean
   totalAmount?: boolean
+  hasGst?: boolean
+  gstAmount?: boolean
   status?: boolean
   paymentStatus?: boolean
 }
 
-export type SaleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerId" | "date" | "totalAmount" | "status" | "paymentStatus", ExtArgs["result"]["sale"]>
+export type SaleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerId" | "date" | "totalAmount" | "hasGst" | "gstAmount" | "status" | "paymentStatus", ExtArgs["result"]["sale"]>
 export type SaleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
   items?: boolean | Prisma.Sale$itemsArgs<ExtArgs>
@@ -689,6 +773,8 @@ export type $SalePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     customerId: string
     date: Date
     totalAmount: number
+    hasGst: boolean
+    gstAmount: number
     status: string
     paymentStatus: string
   }, ExtArgs["result"]["sale"]>
@@ -1120,6 +1206,8 @@ export interface SaleFieldRefs {
   readonly customerId: Prisma.FieldRef<"Sale", 'String'>
   readonly date: Prisma.FieldRef<"Sale", 'DateTime'>
   readonly totalAmount: Prisma.FieldRef<"Sale", 'Float'>
+  readonly hasGst: Prisma.FieldRef<"Sale", 'Boolean'>
+  readonly gstAmount: Prisma.FieldRef<"Sale", 'Float'>
   readonly status: Prisma.FieldRef<"Sale", 'String'>
   readonly paymentStatus: Prisma.FieldRef<"Sale", 'String'>
 }

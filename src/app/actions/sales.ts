@@ -19,7 +19,8 @@ export async function getSales() {
 
 export async function createSale(data: { 
   customerId: string, 
-  items: Array<{ productId: string, cartonsSold: number, overrideRatePerScrew?: number }> 
+  hasGst: boolean,
+  items: Array<{ productId: string, cartonsSold: number, overrideRatePerScrew?: number, remarks?: string }> 
 }) {
   try {
     let totalAmount = 0;
@@ -29,7 +30,6 @@ export async function createSale(data: {
     for (const item of data.items) {
       const product = await prisma.product.findUnique({ where: { id: item.productId } });
       if (!product) throw new Error(`Product not found.`);
-      if (product.currentCartons < item.cartonsSold) throw new Error(`Not enough stock for ${product.name}`);
 
       // Get or Update custom price for customer
       let rate = 0;
@@ -68,20 +68,33 @@ export async function createSale(data: {
       });
 
       // Deduct stock
-      await prisma.product.update({
+      const updatedProduct = await prisma.product.update({
         where: { id: item.productId },
         data: { currentCartons: { decrement: item.cartonsSold } }
       });
       
+      // Send alert if stock falls below threshold
+      if (updatedProduct.currentCartons < 5) {
+        // Import dynamically or normally. We'll add the import at the top.
+        const { sendLowStockEmail } = await import("@/lib/email");
+        await sendLowStockEmail(product.name, updatedProduct.currentCartons);
+      }
+
       // Record stock txn
       await prisma.stockTransaction.create({
         data: {
           productId: item.productId,
           type: 'OUT',
           cartons: item.cartonsSold,
-          notes: `Sold to customer`
+          notes: item.remarks ? `Sold to customer. Remarks: ${item.remarks}` : `Sold to customer`
         }
       });
+    }
+
+    let gstAmount = 0;
+    if (data.hasGst) {
+      gstAmount = totalAmount * 0.18;
+      totalAmount = totalAmount + gstAmount;
     }
 
     // Create Sale record
@@ -89,6 +102,8 @@ export async function createSale(data: {
       data: {
         customerId: data.customerId,
         totalAmount,
+        hasGst: data.hasGst,
+        gstAmount: gstAmount,
         paymentStatus: 'PENDING',
         items: {
           create: saleItems

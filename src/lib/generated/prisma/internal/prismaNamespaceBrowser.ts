@@ -131,6 +131,8 @@ export const SaleScalarFieldEnum = {
   customerId: 'customerId',
   date: 'date',
   totalAmount: 'totalAmount',
+  hasGst: 'hasGst',
+  gstAmount: 'gstAmount',
   status: 'status',
   paymentStatus: 'paymentStatus'
 } as const
