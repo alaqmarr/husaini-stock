@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Product {
+  id              String             @id @default(cuid())
+  name            String
+  boxesPerCarton  Int
+  screwsPerBox    Int
+  currentCartons  Int                @default(0)
+  currentBoxes    Int                @default(0)
+  
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  customerPrices  CustomerPrice[]
+  stockTxns       StockTransaction[]
+  saleItems       SaleItem[]
+}
+
+model Customer {
+  id              String             @id @default(cuid())
+  name            String
+  phone           String?
+  address         String?
+  balance         Float              @default(0.0)
+  
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  prices          CustomerPrice[]
+  sales           Sale[]
+  payments        Payment[]
+}
+
+model CustomerPrice {
+  id              String   @id @default(cuid())
+  customerId      String
+  productId       String
+  ratePerScrew    Float
+
+  customer        Customer @relation(fields: [customerId], references: [id])
+  product         Product  @relation(fields: [productId], references: [id])
+
+  @@unique([customerId, productId])
+}
+
+model StockTransaction {
+  id              String   @id @default(cuid())
+  productId       String
+  type            String   // "IN" or "OUT" or "ADJUST"
+  cartons         Int      @default(0)
+  boxes           Int      @default(0)
+  date            DateTime @default(now())
+  notes           String?
+
+  product         Product  @relation(fields: [productId], references: [id])
+}
+
+model Sale {
+  id              String     @id @default(cuid())
+  customerId      String
+  date            DateTime   @default(now())
+  totalAmount     Float      @default(0.0)
+  status          String     @default("COMPLETED") // "COMPLETED", "CANCELLED"
+  paymentStatus   String     @default("PENDING") // "PENDING", "PARTIAL", "PAID"
+
+  customer        Customer   @relation(fields: [customerId], references: [id])
+  items           SaleItem[]
+}
+
+model SaleItem {
+  id              String   @id @default(cuid())
+  saleId          String
+  productId       String
+  cartonsSold     Int      @default(0)
+  boxesSold       Int      @default(0)
+  ratePerScrew    Float
+  totalPrice      Float
+
+  sale            Sale     @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  product         Product  @relation(fields: [productId], references: [id])
+}
+
+model Payment {
+  id              String   @id @default(cuid())
+  customerId      String
+  amount          Float
+  date            DateTime @default(now())
+  method          String   @default("CASH") // "CASH", "BANK_TRANSFER", etc.
+  status          String   @default("COMPLETED") // "COMPLETED", "PENDING"
+
+  customer        Customer @relation(fields: [customerId], references: [id])
+}
